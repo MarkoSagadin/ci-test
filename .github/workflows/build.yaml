@@ -3,20 +3,31 @@ name: Build
 on:
   workflow_call:
     inputs:
-      release_version:
+      checkout_ref:
         required: true
         type: string
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Determine trigger event
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "checkout_ref=${{ inputs.checkout_ref }}" >> $GITHUB_ENV
+          fi
+          if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
+            echo "checkout_ref=${{ github.head_ref }}" >> $GITHUB_ENV
+          fi
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
           path: project
-          ref: ${{ inputs.release_version }}
+          ref: ${{ env.checkout_ref }}
 
       - name: Retrieve cache
         uses: actions/cache@v3
@@ -43,16 +54,17 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.8.17"
-          cache: "pip"
-          cache-dependency-path: project/scripts/requirements.txt
 
       - name: Install East and West
         run: |
           pip install -r project/scripts/requirements.txt
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+          cache: "pip"
+          cache-dependency-path: project/scripts/requirements.txt
 
       - name: Initialize West manifest directory
         run: west init -l project
@@ -74,10 +86,11 @@ jobs:
 
       - name: Build firmware
         run: |
-          cd project/app
-          east build -b nrf52840dk_nrf52840
+          cd project
+          east release
+
       - name: Archive firmware
         uses: actions/upload-artifact@v3
         with:
-          name: firmware
-          path: project/app/build/zephyr/zephyr.*
+          name: release-files
+          path: project/release

@@ -30,10 +30,17 @@ jobs:
         with:
           version: ${{ env.release_version_cut }}
 
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: release-files
+          path: release
+
       - name: Publish Release
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v0.1.15
         with:
+          files: release
           tag_name: ${{ env.release_version }}
           body: |
             # Release notes

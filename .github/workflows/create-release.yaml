@@ -59,8 +59,14 @@ jobs:
           git push
           git push origin ${{ inputs.version }}
 
-  call-publish-release:
+  call-build:
     needs: update-changelog
+    uses: ./.github/workflows/build.yaml
+    with:
+      release_version: ${{ inputs.version }}
+
+  call-publish-release:
+    needs: call-build
     uses: ./.github/workflows/publish-release.yaml
     with:
       release_version: ${{ inputs.version }}

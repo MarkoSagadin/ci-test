@@ -74,10 +74,11 @@ jobs:
 
       - name: Build firmware
         run: |
-          cd project/app
-          east build -b nrf52840dk_nrf52840
+          cd project
+          east release
+
       - name: Archive firmware
         uses: actions/upload-artifact@v3
         with:
-          name: firmware
-          path: project/app/build/zephyr/zephyr.*
+          name: release-files
+          path: project/release

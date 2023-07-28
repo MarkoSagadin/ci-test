@@ -10,13 +10,11 @@ on:
         required: true
 env:
   GIT_TERMINAL_PROMPT: 0
+  runner: ubuntu-22.04
 
 jobs:
   update-changelog:
-    runs-on:
-      ubuntu-22.04
-      #runs-on: self-hosted
-
+    runs-on: ${{ env.runner }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -70,3 +68,24 @@ jobs:
     uses: ./.github/workflows/publish-release.yaml
     with:
       release_version: ${{ inputs.version }}
+
+  cleanup-on-failure:
+    if:
+      failure() && (steps.call-build.outcome != 'success' ||
+      call-publish-release != 'success')
+    needs: [call-build, call-publish-release]
+    runs-on: ${{ env.runner }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0 # Fetch history for all branches and tags
+
+      - name: Cleanup tag and Changelog
+        run: |
+          git reset --hard HEAD~1
+          git tag -d ${{ inputs.version }}
+          git push
+          git push --tags

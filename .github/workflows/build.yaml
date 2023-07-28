@@ -18,6 +18,10 @@ jobs:
           path: project
           ref: ${{ inputs.release_version }}
 
+      - name: Install East and West
+        run: |
+          pip install -r project/scripts/requirements123123123.txt
+
       - name: Retrieve cache
         uses: actions/cache@v3
         env:
@@ -50,10 +54,6 @@ jobs:
           python-version: "3.8.17"
           cache: "pip"
           cache-dependency-path: project/scripts/requirements.txt
-
-      - name: Install East and West
-        run: |
-          pip install -r project/scripts/requirements123123123.txt
 
       - name: Initialize West manifest directory
         run: west init -l project

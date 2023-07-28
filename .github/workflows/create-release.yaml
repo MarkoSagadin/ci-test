@@ -87,5 +87,5 @@ jobs:
           git config user.email noreply@github.com
           git reset --hard HEAD~1
           git tag -d ${{ inputs.version }}
-          git push
+          git push origin main
           git push --tags

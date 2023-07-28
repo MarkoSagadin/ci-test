@@ -7,7 +7,7 @@ apps:
     build-types:
       - type: debug
         conf-files:
-          - debug1234.conf
+          - debug.conf
       - type: uart
         conf-files:
           - debug.conf

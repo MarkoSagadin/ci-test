@@ -69,9 +69,7 @@ jobs:
       release_version: ${{ inputs.version }}
 
   cleanup-on-failure:
-    if:
-      ${{ always() && contains(join(needs.*.result, ','), 'failed') &&
-      contains(join(needs.*.result, ','), 'cancelled') }}
+    if: ${{ always() && !contains(join(needs.*.result, ','), 'succeded') }}
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04
 
@@ -79,8 +77,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          ref: main
-          fetch-depth: 0 # Fetch history for all branches and tags
+          ref: ${{ inputs.version }}
 
       - name: Cleanup tag and Changelog
         run: |

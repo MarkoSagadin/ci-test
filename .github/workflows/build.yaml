@@ -43,6 +43,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -52,7 +53,7 @@ jobs:
 
       - name: Install East and West
         run: |
-          pip install -r project/scripts/requirements.txt
+          pip install -r project/scripts/requirements123123123.txt
 
       - name: Initialize West manifest directory
         run: west init -l project

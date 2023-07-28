@@ -1,5 +1,5 @@
 apps:
-  - name: apppas
+  - name: app
     west-boards:
       - custom_nrf52840dk
       - nrf52840dk_nrf52840
@@ -7,7 +7,7 @@ apps:
     build-types:
       - type: debug
         conf-files:
-          - debug.conf
+          - debug1234.conf
       - type: uart
         conf-files:
           - debug.conf

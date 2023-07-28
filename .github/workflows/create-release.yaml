@@ -78,6 +78,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ inputs.version }}
+          # Fetch two commits, so you can hard reset below
+          fetch-depth: 2
 
       - name: Cleanup tag and Changelog
         run: |

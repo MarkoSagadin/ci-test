@@ -77,7 +77,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: ${{ inputs.version }}
           # Fetch two commits, so you can hard reset below
           fetch-depth: 2
 

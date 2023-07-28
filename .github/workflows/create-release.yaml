@@ -70,8 +70,8 @@ jobs:
 
   cleanup-on-failure:
     if:
-      ${{ always() && !contains(join(needs.*.result, ','), 'success') &&
-      !contains(join(needs.*.result, ','), 'skipped') }}
+      ${{ always() && contains(join(needs.*.result, ','), 'failed') &&
+      contains(join(needs.*.result, ','), 'cancelled') }}
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04
 

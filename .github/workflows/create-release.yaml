@@ -53,6 +53,7 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Update CHANGELOG.md for Release ${{ inputs.version }}"
           git tag ${{ inputs.version }}
+          asdasdasdasd
           git push
           git push origin ${{ inputs.version }}
 

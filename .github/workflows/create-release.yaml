@@ -10,11 +10,10 @@ on:
         required: true
 env:
   GIT_TERMINAL_PROMPT: 0
-  runner: ubuntu-22.04
 
 jobs:
   update-changelog:
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -74,7 +73,7 @@ jobs:
       failure() && (steps.call-build.outcome != 'success' ||
       call-publish-release != 'success')
     needs: [call-build, call-publish-release]
-    runs-on: ${{ env.runner }}
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repository

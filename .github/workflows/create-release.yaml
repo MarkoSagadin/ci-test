@@ -58,7 +58,7 @@ jobs:
     needs: update-changelog
     uses: ./.github/workflows/build.yaml
     with:
-      release_version: ${{ inputs.version }}
+      checkout_ref: ${{ inputs.version }}
 
   call-publish-release:
     needs: call-build

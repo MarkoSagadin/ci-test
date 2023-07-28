@@ -69,9 +69,7 @@ jobs:
       release_version: ${{ inputs.version }}
 
   cleanup-on-failure:
-    if:
-      failure() && (jobs.call-build.result != 'success' ||
-      jobs.call-publish-release.result != 'success')
+    if: ${{ always() && !contains(join(needs.*.result, ','), 'success') }}
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04
 

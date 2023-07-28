@@ -70,8 +70,8 @@ jobs:
 
   cleanup-on-failure:
     if:
-      failure() && (steps.call-build.outcome != 'success' ||
-      call-publish-release != 'success')
+      failure() && (jobs.call-build.outcome != 'success' || call-publish-release
+      != 'success')
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04
 

@@ -8,7 +8,7 @@ on:
         type: string
   pull_request:
     branches:
-      - feature/*
+      - "feature/**"
 
 jobs:
   build:

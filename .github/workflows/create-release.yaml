@@ -34,8 +34,6 @@ jobs:
             echo "::error::Invalid input version: it already exists!"
             exit 1
           fi
-          version_cut=$(echo "${{ inputs.version }}" | cut -c 2-)
-          echo "version_cut=$version_cut" >> $GITHUB_ENV
 
       - name: Update Changelog
         uses: IRNAS/keep-a-changelog-new-release@v1.3.1
@@ -69,6 +67,8 @@ jobs:
       release_version: ${{ inputs.version }}
 
   cleanup-on-failure:
+    # Only run cleanup if either call-build or call-publish-release fail in
+    # some way.
     if: ${{ always() && !contains(join(needs.*.result, ','), 'succeded') }}
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04

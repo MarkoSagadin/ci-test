@@ -29,10 +29,6 @@ jobs:
           path: project
           ref: ${{ env.checkout_ref }}
 
-      - name: Install East and West
-        run: |
-          pip install -r project/scripts/requirements11.txt
-
       - name: Retrieve cache
         uses: actions/cache@v3
         env:
@@ -58,6 +54,10 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
+      - name: Install East and West
+        run: |
+          pip install -r project/scripts/requirements.txt
 
       - name: Set up Python
         uses: actions/setup-python@v4

@@ -88,4 +88,4 @@ jobs:
           git reset --hard HEAD~1
           git push --force origin HEAD:main
           git tag -d ${{ inputs.version }}
-          git push delete origin  ${{ inputs.version }}
+          git push --delete origin  ${{ inputs.version }}

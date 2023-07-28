@@ -1,5 +1,5 @@
 apps:
-  - name: app
+  - name: apppas
     west-boards:
       - custom_nrf52840dk
       - nrf52840dk_nrf52840

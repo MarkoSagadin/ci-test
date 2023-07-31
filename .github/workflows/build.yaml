@@ -2,6 +2,10 @@ name: Build
 
 on:
   workflow_call:
+    inputs:
+      checkout_ref:
+        required: true
+        type: string
   pull_request:
     types: [opened, reopened, synchronize]
 
@@ -16,7 +20,7 @@ jobs:
         working-directory: project
 
     steps:
-      - name: Checkout repo
+      - name: Checkout last PR commit
         if: github.event_name == 'pull_request'
         uses: actions/checkout@v3
         with:
@@ -27,7 +31,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ inputs.checkout_ref }}
           path: project
 
       - name: Retrieve cache

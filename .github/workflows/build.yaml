@@ -13,7 +13,7 @@ jobs:
         shell: bash
         # Set work dir to "project" for all 'run' calls. Beware, everything else
         # (actions, 'with' params, etc.) still needs to reference full path.
-        # working-directory: project
+        working-directory: project
 
     steps:
       - name: Checkout repo

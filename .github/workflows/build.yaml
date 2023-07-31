@@ -24,7 +24,7 @@ jobs:
           path: project
 
       - name: Checkout last tag
-        if: github.event_name == 'workflow_disptch'
+        if: github.event_name == 'workflow_call'
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref_name }}

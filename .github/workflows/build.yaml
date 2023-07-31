@@ -16,11 +16,6 @@ jobs:
         # working-directory: project
 
     steps:
-      - name: Echo
-        run: |
-          echo ${{ github.event_name }}
-          exit
-
       - name: Checkout repo
         if: github.event_name == 'pull_request'
         uses: actions/checkout@v3
@@ -29,7 +24,7 @@ jobs:
           path: project
 
       - name: Checkout last tag
-        if: github.event_name == 'workflow_call'
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref_name }}

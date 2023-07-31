@@ -38,8 +38,14 @@ jobs:
 
       - name: Read extra release notes
         run: |
+          # Echoing contents of the below .md files need to be done in special 
+          # manner, as they will usually be multistrings.
+          echo "pre_changelog_var<<EOF" >> $GITHUB_ENV
           echo "pre_changelog=$(cat artifacts/pre_changelog.md)" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "post_changelog_var<<EOF" >> $GITHUB_ENV
           echo "post_changelog=$(cat artifacts/post_changelog.md)" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           rm -f artifacts/pre_changelog.md
           rm -f artifacts/post_changelog.md
 

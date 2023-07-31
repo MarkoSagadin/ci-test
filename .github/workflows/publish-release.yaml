@@ -36,6 +36,13 @@ jobs:
           name: artifacts
           path: artifacts
 
+      - name: Read extra release notes
+        run: |
+          echo "pre_changelog=$(cat artifacts/pre_changelog.md)" >> $GITHUB_ENV
+          echo "post_changelog=$(cat artifacts/post_changelog.md)" >> $GITHUB_ENV
+          rm -f artifacts/pre_changelog.md
+          rm -f artifacts/post_changelog.md
+
       - name: Publish Release
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v0.1.15
@@ -45,4 +52,8 @@ jobs:
           body: |
             # Release notes
 
+            ${{ env.pre_changelog }}
+
             ${{ steps.changelog-reader.outputs.changes }}
+
+            ${{ env.post_changelog }}

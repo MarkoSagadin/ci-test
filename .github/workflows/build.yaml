@@ -34,9 +34,6 @@ jobs:
           ref: ${{ inputs.checkout_ref }}
           path: project
 
-      - name: Install dependencies
-        run: make install-de
-
       - name: Retrieve cache
         uses: actions/cache@v3
         env:

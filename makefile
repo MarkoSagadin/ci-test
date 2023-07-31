@@ -18,3 +18,5 @@ build:
 post-build:
 	mkdir -p artifacts
 	cp release/*.zip artifacts
+	cp pre_changelog.md artifacts
+	cp post_changelog.md artifacts

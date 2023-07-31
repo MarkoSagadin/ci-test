@@ -33,8 +33,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: release-files
-          path: release
+          name: artifacts
+          path: artifacts
 
       - name: debug
         run: |
@@ -44,7 +44,7 @@ jobs:
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: release/*.zip
+          files: artifacts/*
           tag_name: ${{ env.release_version }}
           body: |
             # Release notes

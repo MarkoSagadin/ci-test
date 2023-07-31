@@ -57,32 +57,32 @@ jobs:
     needs: update-changelog
     uses: ./.github/workflows/build.yaml
 
-  # call-publish-release:
-  #   needs: call-build
-  #   uses: ./.github/workflows/publish-release.yaml
-  #   with:
-  #     release_version: ${{ inputs.version }}
+  call-publish-release:
+    needs: call-build
+    uses: ./.github/workflows/publish-release.yaml
+    with:
+      release_version: ${{ inputs.version }}
 
-  # cleanup-on-failure:
-  #   # Only run cleanup if either call-build or call-publish-release fail in
-  #   # some way.
-  #   if: ${{ always() && !contains(join(needs.*.result, ','), 'success') }}
-  #   needs: [call-build, call-publish-release]
-  #   runs-on: ubuntu-22.04
+  cleanup-on-failure:
+    # Only run cleanup if either call-build or call-publish-release fail in
+    # some way.
+    if: ${{ always() && !contains(join(needs.*.result, ','), 'success') }}
+    needs: [call-build, call-publish-release]
+    runs-on: ubuntu-22.04
 
-  #   steps:
-  #     - name: Checkout Repository
-  #       uses: actions/checkout@v3
-  #       with:
-  #         ref: ${{ inputs.version }}
-  #         # Fetch two commits, so you can hard reset below
-  #         fetch-depth: 2
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.version }}
+          # Fetch two commits, so you can hard reset below
+          fetch-depth: 2
 
-  #     - name: Cleanup tag and Changelog
-  #       run: |
-  #         git config user.name "github-bot :robot:"
-  #         git config user.email noreply@github.com
-  #         git reset --hard HEAD~1
-  #         git push --force origin HEAD:main
-  #         git tag -d ${{ inputs.version }}
-  #         git push --delete origin  ${{ inputs.version }}
+      - name: Cleanup tag and Changelog
+        run: |
+          git config user.name "github-bot :robot:"
+          git config user.email noreply@github.com
+          git reset --hard HEAD~1
+          git push --force origin HEAD:main
+          git tag -d ${{ inputs.version }}
+          git push --delete origin  ${{ inputs.version }}

@@ -66,8 +66,8 @@ jobs:
       - name: Post-build
         run: make post-build
 
-      - name: Archive firmware
+      - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: release-files
-          path: project/artifacts
+          name: artifacts
+          path: project/artifacts/*

@@ -34,14 +34,14 @@ jobs:
           cache-name: cache-modules
         with:
           path: |
-            ../bootloader
-            ../mbedtls
-            ../modules
-            ../nrf
-            ../nrfxlib
-            ../test
-            ../tools
-            ../zephyr
+            ../bootloader/
+            ../mbedtls/
+            ../modules/
+            ../nrf/
+            ../nrfxlib/
+            ../test/
+            ../tools/
+            ../zephyr/
             ~/.local/share/east/downloads/
             ~/.local/share/east/nrfutil-toolchain-manager.exe
           # Note above two lines, if we are caching entire ~/.local/share/east

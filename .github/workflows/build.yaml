@@ -34,14 +34,14 @@ jobs:
           cache-name: cache-modules
         with:
           path: |
-            ../bootloader
-            ../mbedtls
-            ../modules
-            ../nrf
-            ../nrfxlib
-            ../test
-            ../tools
-            ../zephyr
+            bootloader
+            mbedtls
+            modules
+            nrf
+            nrfxlib
+            test
+            tools
+            zephyr
             ~/.local/share/east/downloads/
             ~/.local/share/east/nrfutil-toolchain-manager.exe
           # Note above two lines, if we are caching entire ~/.local/share/east
@@ -65,30 +65,45 @@ jobs:
         run: |
           pip install -r scripts/requirements.txt
 
+      - name: Debug 1
+        run: |
+          pwd
+          ls -al
+
       - name: Initialize West manifest directory
         run: |
           west init -l .
+
+      - name: Debug 2
+        run: |
+          pwd
+          ls -al
 
       - name: Update West manifest directory
         run: |
           west update -o=--depth=1 -n
 
-      - name: Install Toolchain manager
+      - name: Debug 3
         run: |
-          east sys-setup
-          # Below line is needed, as the toolchain manager might be cached, but not configured
-          ~/.local/share/east/nrfutil-toolchain-manager.exe config --install-dir ~/.local/share/east
+          pwd
+          ls -al
 
-      - name: Install NCS Toolchain
-        run: |
-          east update toolchain
+      # - name: Install Toolchain manager
+      #   run: |
+      #     east sys-setup
+      #     # Below line is needed, as the toolchain manager might be cached, but not configured
+      #     ~/.local/share/east/nrfutil-toolchain-manager.exe config --install-dir ~/.local/share/east
 
-      - name: Build firmware
-        run: |
-          east release
+      # - name: Install NCS Toolchain
+      #   run: |
+      #     east update toolchain
 
-      - name: Archive firmware
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-files
-          path: project/release
+      # - name: Build firmware
+      #   run: |
+      #     east release
+
+      # - name: Archive firmware
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: release-files
+      #     path: project/release

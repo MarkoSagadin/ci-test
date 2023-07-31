@@ -52,7 +52,7 @@ jobs:
           cache-dependency-path: project/scripts/requirements.txt
 
       - name: Install dependencies
-        run: make install-de
+        run: make install-dep
 
       - name: Setup project
         run: make project-setup

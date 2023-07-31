@@ -66,8 +66,6 @@ jobs:
   cleanup-on-failure:
     # Only run cleanup if either call-build or call-publish-release fail in
     # some way.
-    # ${{ always() && needs.call-build.result != 'success' ||
-    # needs.call-publish-release.result != 'success' }}
     needs: [call-build, call-publish-release]
     if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
     runs-on: ubuntu-22.04

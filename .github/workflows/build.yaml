@@ -2,31 +2,38 @@ name: Build
 
 on:
   workflow_call:
-    inputs:
-      checkout_ref:
-        required: true
-        type: string
+  #   inputs:
+  #     checkout_ref:
+  #       required: true
+  #       type: string
   pull_request:
     types: [opened, reopened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: project
 
     steps:
-      - name: Determine trigger event
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "checkout_ref=${{ inputs.checkout_ref }}" >> $GITHUB_ENV
-          fi
-          if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
-            echo "checkout_ref=${{ github.head_ref }}" >> $GITHUB_ENV
-          fi
+      # - name: Determine trigger event
+      #   run: |
+      #     if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+      #       echo "checkout_ref=${{ inputs.checkout_ref }}" >> $GITHUB_ENV
+      #     fi
+      #     if [[ "${{ github.event_name }}" == "pull_request_target" ]]; then
+      #       echo "checkout_ref=${{ github.head_ref }}" >> $GITHUB_ENV
+      #     fi
 
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.checkout_ref }}
+          path: project
+
+      - name: Github REF
+        run: echo $GITHUB_REF
 
       - name: Retrieve cache
         uses: actions/cache@v3
@@ -34,21 +41,20 @@ jobs:
           cache-name: cache-modules
         with:
           path: |
-            ../bootloader/
-            ../mbedtls/
-            ../modules/
-            ../nrf/
-            ../nrfxlib/
-            ../test/
-            ../tools/
-            ../zephyr/
+            bootloader
+            modules
+            nrf
+            nrfxlib
+            test
+            tools
+            zephyr
             ~/.local/share/east/downloads/
             ~/.local/share/east/nrfutil-toolchain-manager.exe
           # Note above two lines, if we are caching entire ~/.local/share/east
           # folder then cache action fails during download/extract step
           key:
             ${{ runner.os }}-build-v2-${{ env.cache-name }}-${{
-            hashFiles('west.yml') }}
+            hashFiles('project/west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-

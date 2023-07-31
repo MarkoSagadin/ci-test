@@ -13,9 +13,14 @@ jobs:
         shell: bash
         # Set work dir to "project" for all 'run' calls. Beware, everything else
         # (actions, 'with' params, etc.) still needs to reference full path.
-        working-directory: project
+        # working-directory: project
 
     steps:
+      - name: Echo
+        run: |
+          echo ${{ github.event_name }}
+          exit
+
       - name: Checkout repo
         if: github.event_name == 'pull_request'
         uses: actions/checkout@v3

@@ -48,7 +48,7 @@ jobs:
           # folder then cache action fails during download/extract step
           key:
             ${{ runner.os }}-build-v2-${{ env.cache-name }}-${{
-            hashFiles('project/west.yml') }}
+            hashFiles('west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-

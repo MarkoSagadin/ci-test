@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+### Added
+
+-   Cool stuff
+
 ## [6.0.18] - 2023-07-31
 
 ## [6.0.17] - 2023-07-31

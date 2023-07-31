@@ -79,16 +79,16 @@ jobs:
           # Below line is needed, as the toolchain manager might be cached, but not configured
           ~/.local/share/east/nrfutil-toolchain-manager.exe config --install-dir ~/.local/share/east
 
-      # - name: Install NCS Toolchain
-      #   run: |
-      #     east update toolchain
+      - name: Install NCS Toolchain
+        run: |
+          east update toolchain
 
-      # - name: Build firmware
-      #   run: |
-      #     east release
+      - name: Build firmware
+        run: |
+          east release
 
-      # - name: Archive firmware
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: release-files
-      #     path: project/release
+      - name: Archive firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-files
+          path: project/release

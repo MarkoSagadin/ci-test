@@ -66,11 +66,17 @@ jobs:
   cleanup-on-failure:
     # Only run cleanup if either call-build or call-publish-release fail in
     # some way.
-    if: ${{ always() && !contains(join(needs.*.result, ','), 'success') }}
+    # if: ${{ always() && !contains(join(needs.*.result, ','), 'success') }}
     needs: [call-build, call-publish-release]
     runs-on: ubuntu-22.04
 
     steps:
+      - name: print
+        run: |
+          echo ${{ join(needs.*.result, ',')  }}
+          echo ${{ contains(join(needs.*.result, ','), 'success') }}
+          echo ${{ !contains(join(needs.*.result, ','), 'success') }}
+
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:

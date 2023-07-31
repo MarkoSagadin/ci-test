@@ -21,9 +21,6 @@ jobs:
         with:
           path: project
 
-      - name: Github REF
-        run: echo $GITHUB_REF
-
       - name: Retrieve cache
         uses: actions/cache@v3
         env:
@@ -42,12 +39,10 @@ jobs:
           # Note above two lines, if we are caching entire ~/.local/share/east
           # folder then cache action fails during download/extract step
           key:
-            ${{ runner.os }}-build-v2-${{ env.cache-name }}-${{
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{
             hashFiles('project/west.yml') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -56,55 +51,23 @@ jobs:
           cache: "pip"
           cache-dependency-path: project/scripts/requirements.txt
 
-      - name: Install East and West
-        run: |
-          pip install -r scripts/requirements.txt
+      - name: Install dependencies
+        run: make install-dep
 
-      - name: Debug 1
-        run: |
-          pwd
-          ls -al
-          echo "Outside"
-          ls -al ..
+      - name: Setup project
+        run: make project-setup
 
-      - name: Initialize West manifest directory
-        run: |
-          west init -l .
+      - name: Pre-build
+        run: make pre-build
 
-      - name: Debug 2
-        run: |
-          pwd
-          ls -al
-          echo "Outside"
-          ls -al ..
+      - name: Build
+        run: make build
 
-      - name: Update West manifest directory
-        run: |
-          west update -o=--depth=1 -n
-
-      - name: Debug 3
-        run: |
-          pwd
-          ls -al
-          echo "Outside"
-          ls -al ..
-
-      - name: Install Toolchain manager
-        run: |
-          east sys-setup
-          # Below line is needed, as the toolchain manager might be cached, but not configured
-          ~/.local/share/east/nrfutil-toolchain-manager.exe config --install-dir ~/.local/share/east
-
-      - name: Install NCS Toolchain
-        run: |
-          east update toolchain
-
-      - name: Build firmware
-        run: |
-          east release
+      - name: Post-build
+        run: make post-build
 
       - name: Archive firmware
         uses: actions/upload-artifact@v3
         with:
           name: release-files
-          path: project/release
+          path: project/artifacts

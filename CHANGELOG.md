@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [7.0.0] - 2023-07-31
+
 ### Added
 
 -   Cool stuff
@@ -78,7 +80,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.1.0] - 2023-07-27
 
-[Unreleased]: https://github.com/MarkoSagadin/ci-test/compare/v6.0.18...HEAD
+[Unreleased]: https://github.com/MarkoSagadin/ci-test/compare/v7.0.0...HEAD
+
+[7.0.0]: https://github.com/MarkoSagadin/ci-test/compare/v6.0.18...v7.0.0
 
 [6.0.18]: https://github.com/MarkoSagadin/ci-test/compare/v6.0.17...v6.0.18
 

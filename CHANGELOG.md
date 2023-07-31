@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [1.4.0] - 2023-07-31
+
 ## [1.3.0] - 2023-07-31
 
 ## [1.0.5] - 2023-07-31
@@ -40,7 +42,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.1.0] - 2023-07-27
 
-[Unreleased]: https://github.com/MarkoSagadin/ci-test/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/MarkoSagadin/ci-test/compare/v1.4.0...HEAD
+
+[1.4.0]: https://github.com/MarkoSagadin/ci-test/compare/v1.3.0...v1.4.0
 
 [1.3.0]: https://github.com/MarkoSagadin/ci-test/compare/v1.0.5...v1.3.0
 

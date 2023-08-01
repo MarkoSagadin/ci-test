@@ -54,8 +54,7 @@ jobs:
           key:
             ${{ runner.os }}-build-${{ env.cache-name }}-${{
             hashFiles('project/west.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -76,10 +75,12 @@ jobs:
       - name: Build
         run: make build
 
-      - name: Post-build
+      - name: Pre-package
+        if: github.event_name == 'workflow_dispatch'
         run: make post-build
 
-      - name: Archive artifacts
+      - name: Package artifacts
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v3
         with:
           name: artifacts

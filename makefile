@@ -15,7 +15,7 @@ pre-build:
 build:
 	east release
 
-post-build:
+pre-package:
 	mkdir -p artifacts
 	cp release/*.zip artifacts
 	cp scripts/pre_changelog.md artifacts
